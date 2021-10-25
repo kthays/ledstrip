@@ -1,3 +1,4 @@
+#pragma once
 
 #define PATTERN_STR_LEN 16  // 8.3 files
 

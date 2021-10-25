@@ -9,8 +9,12 @@
 //  13: SCK
 //
 //  Note: Files must be in 8.3 format
-
+#pragma once
 #include <SD.h>
+#include "patterns.h"
+
+// Note: using .js instead of .json since the sd module can only handle 8.3 filenames
+#define SDCARD_FILE_PATTERNS  "patterns.js"
 
 class SDCard {
 public:
@@ -18,6 +22,10 @@ public:
 
     void Setup();
     void Loop();
+
+    // Populates |list| with the patterns described in |SDCARD_FILE_PATTERNS|
+    //  Note: Clears the list before re-populating it
+    void LoadPatternsFromFile(CyclicPatternList& list);
 
 private:
     void PrintDirectoryRoot();
