@@ -29,6 +29,9 @@ public:
     const Pattern* GetCurrentPattern() const;
     void Advance(); // Advance the current pattern to the next in the list
 
+    // Destroys all patterns contained in the list, resets current pattern to nullptr
+    void Clear();
+
 private:
     Pattern* pFirst;
     Pattern* pLast;

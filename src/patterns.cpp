@@ -31,12 +31,8 @@ CyclicPatternList::CyclicPatternList()
 
 CyclicPatternList::~CyclicPatternList()
 {
-    // Delete all patterns in the list
-    while (pFirst != nullptr) {
-        pCurrent = pFirst->pNext;
-        delete pFirst;
-        pFirst = pCurrent;
-    } 
+    // Destroy the list contents
+    Clear();
 }
 
 // Takes ownership of the given pattern and appends it to the end of the list
@@ -64,4 +60,19 @@ void CyclicPatternList::Advance()
 {
     if (pCurrent != nullptr) pCurrent = pCurrent->pNext;
     if (pCurrent == nullptr) pCurrent = pFirst; // Loop back around
+}
+
+void CyclicPatternList::Clear()
+{
+    // Delete all patterns in the list
+    while (pFirst != nullptr) {
+        pCurrent = pFirst->pNext;
+        delete pFirst;
+        pFirst = pCurrent;
+    }
+
+    // Reset state
+    pFirst = nullptr;
+    pCurrent = nullptr;
+    pLast = nullptr;
 }
