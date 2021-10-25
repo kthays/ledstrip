@@ -1,4 +1,5 @@
 
+#define PATTERN_STR_LEN 16  // 8.3 files
 
 // ** Pattern - Metadata for a pattern, includes the file path on the SD card to the pattern data, and how fast it should go
 class Pattern {
@@ -12,7 +13,7 @@ private:
     friend class CyclicPatternList; // Give the list container access to the pNext var
     Pattern* pNext;
 
-    char* szcFilePath;
+    char szcFilePath[PATTERN_STR_LEN];
     int iTimePerRowMS;
 };
 

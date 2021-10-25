@@ -1,6 +1,5 @@
 #include "patterns.h"
-
-#define PATTERN_STR_LEN 16  // 8.3 files
+#include "string.h"
 
 // ** Pattern
 Pattern::Pattern(const char* _szcFilePath, int _iTimePerRowMS)
