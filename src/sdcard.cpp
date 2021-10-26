@@ -2,15 +2,19 @@
 #include <SPI.h>
 #include <ArduinoJson.h>
 #include "pins.h"
+#include "eventhandler.h"
 
 SDCard::SDCard()
-: bIsCardIn(false)
+: pEventHandler(nullptr)
+, bIsCardIn(false)
 {
     
 }
 
-void SDCard::Setup()
+void SDCard::Setup(EventHandler* _pEventHandler)
 {
+  pEventHandler = _pEventHandler;
+
   pinMode(PIN_SDCARD_CD, INPUT_PULLUP);
 
   // Wait for serial port to connect. Needed for native USB port only
@@ -63,4 +67,6 @@ void SDCard::EvCardIn()
   // Re-initialize 
   if (SD.begin(PIN_SDCARD_CS)) Serial.println("Card Ready");
   else Serial.println("Failed to initialize SD module!");
+
+  if (pEventHandler != nullptr) pEventHandler->EvSDCardIn();
 }
