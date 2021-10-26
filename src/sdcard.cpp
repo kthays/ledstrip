@@ -1,9 +1,7 @@
 #include "sdcard.h"
 #include <SPI.h>
 #include <ArduinoJson.h>
-
-#define SDCARD_PIN_CD 8
-#define SDCARD_PIN_CS 10
+#include "pins.h"
 
 SDCard::SDCard()
 : bIsCardIn(false)
@@ -13,7 +11,7 @@ SDCard::SDCard()
 
 void SDCard::Setup()
 {
-  pinMode(SDCARD_PIN_CD, INPUT_PULLUP);
+  pinMode(PIN_SDCARD_CD, INPUT_PULLUP);
 
   // Wait for serial port to connect. Needed for native USB port only
   while (!Serial) { ; }
@@ -31,7 +29,7 @@ void SDCard::Loop()
 
 bool SDCard::IsCardIn()
 {
-  return digitalRead(SDCARD_PIN_CD) == LOW;
+  return digitalRead(PIN_SDCARD_CD) == LOW;
 }
 
 void SDCard::LoadPatternsFromFile(CyclicPatternList& list)
@@ -63,6 +61,6 @@ void SDCard::LoadPatternsFromFile(CyclicPatternList& list)
 void SDCard::EvCardIn()
 {
   // Re-initialize 
-  if (SD.begin(SDCARD_PIN_CS)) Serial.println("Card ready");
+  if (SD.begin(PIN_SDCARD_CS)) Serial.println("Card Ready");
   else Serial.println("Failed to initialize SD module!");
 }
