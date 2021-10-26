@@ -1,6 +1,8 @@
 #include "patterns.h"
 #include "string.h"
 
+#include <Arduino.h> // Only needed for Serial.Print
+
 // ** Pattern
 Pattern::Pattern(const char* _szcFilePath, int _iTimePerRowMS)
 : pNext(nullptr)
@@ -75,4 +77,18 @@ void CyclicPatternList::Clear()
     pFirst = nullptr;
     pCurrent = nullptr;
     pLast = nullptr;
+}
+
+void CyclicPatternList::Print()
+{
+    Serial.println("Pattern List:");
+
+    const Pattern* pCur = pFirst;
+    while (pCur != nullptr) {
+        Serial.print(pCur->GetFilePath());
+        Serial.print(": ");
+        Serial.print(pCur->GetTimePerRowMS());
+        Serial.println(" ms");
+        pCur = pCur->pNext;
+    }
 }

@@ -33,6 +33,10 @@ public:
     // Destroys all patterns contained in the list, resets current pattern to nullptr
     void Clear();
 
+    // For debugging only - display the contents of the list
+    void Print();
+
+
 private:
     Pattern* pFirst;
     Pattern* pLast;
