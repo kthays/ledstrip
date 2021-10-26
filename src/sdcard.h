@@ -3,6 +3,7 @@
 // https://arduinojson.org/v6/example/config/
 //
 // Pinout as specified by https://store-usa.arduino.cc/products/arduino-nano?selectedStore=us
+//  8:  CD
 //  10: CS
 //  11: MOSI
 //  12: MISO
@@ -27,10 +28,11 @@ public:
     //  Note: Clears the list before re-populating it
     void LoadPatternsFromFile(CyclicPatternList& list);
 
+    // Check if the SD card is plugged in
+    bool IsCardIn();
+
 private:
-    void PrintDirectoryRoot();
-    void PrintDirectory(File dir, int numTabs);
+    void EvCardIn(); // Call this every time the SD card is plugged in
 
-    bool LoadPatternConfig(const char* szcFileName);
-
+    bool bIsCardIn;
 };

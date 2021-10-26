@@ -2,71 +2,37 @@
 #include <SPI.h>
 #include <ArduinoJson.h>
 
+#define SDCARD_PIN_CD 8
 #define SDCARD_PIN_CS 10
 
 SDCard::SDCard()
+: bIsCardIn(false)
 {
     
 }
 
 void SDCard::Setup()
 {
+  pinMode(SDCARD_PIN_CD, INPUT_PULLUP);
+
   // Wait for serial port to connect. Needed for native USB port only
   while (!Serial) { ; }
-
-  // Start the SD card reader
-  if (!SD.begin(SDCARD_PIN_CS)) {
-    Serial.println("Setup failed!");
-    while (1);
-  }
-
-  Serial.println("Setup success!");
-
-  // See if we can parse the file contents
-  PrintDirectoryRoot();
 }
 
 void SDCard::Loop()
 {
-
-}
-
-void SDCard::PrintDirectoryRoot()
-{
-  File root = SD.open("/");
-  PrintDirectory(root, 0);
-}
-
-void SDCard::PrintDirectory(File dir, int numTabs) 
-{
-  while (true) {
-    File entry =  dir.openNextFile();
-    if (! entry) break;
-
-    // Print the tabs
-    for (uint8_t i = 0; i < numTabs; i++) {
-      Serial.print('\t');
-    }
-
-    // Print the current entry
-    Serial.print(entry.name());
-
-    // Recursively print subdirectory
-    if (entry.isDirectory()) {
-      Serial.println("/");
-      PrintDirectory(entry, numTabs + 1);
-    } else {
-      // Print the file size
-      Serial.print("\t\t");
-      Serial.println(entry.size(), DEC);
-    }
-
-    // Cleanup
-    entry.close();
+  const bool bCardInNow = IsCardIn();
+  if (bIsCardIn != bCardInNow) {
+    bIsCardIn = bCardInNow;
+    Serial.println(bIsCardIn ? "Card In" : "Card Out");
+    if (bIsCardIn) EvCardIn();
   }
 }
 
-
+bool SDCard::IsCardIn()
+{
+  return digitalRead(SDCARD_PIN_CD) == LOW;
+}
 
 void SDCard::LoadPatternsFromFile(CyclicPatternList& list)
 {
@@ -92,4 +58,11 @@ void SDCard::LoadPatternsFromFile(CyclicPatternList& list)
   }
 
   file.close();
+}
+
+void SDCard::EvCardIn()
+{
+  // Re-initialize 
+  if (SD.begin(SDCARD_PIN_CS)) Serial.println("Card ready");
+  else Serial.println("Failed to initialize SD module!");
 }
