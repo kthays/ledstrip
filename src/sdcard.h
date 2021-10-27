@@ -12,12 +12,13 @@
 //  Note: Files must be in 8.3 format
 #pragma once
 #include <SD.h>
-#include "patterns.h"
 
 // Note: using .js instead of .json since the sd module can only handle 8.3 filenames
 #define SDCARD_FILE_PATTERNS  "patterns.js"
 
 class EventHandler;
+class CyclicPatternList;
+class Pattern;
 
 class SDCard {
 public:
@@ -28,7 +29,10 @@ public:
 
     // Populates |list| with the patterns described in |SDCARD_FILE_PATTERNS|
     //  Note: Clears the list before re-populating it
-    void LoadPatternsFromFile(CyclicPatternList& list);
+    void LoadPatternsFromFile(CyclicPatternList* pList);
+
+    // Loads the pattern's current row data from the file to the pattern row buffer
+    void ReadPatternData(Pattern* pPattern);
 
     // Check if the SD card is plugged in
     bool IsCardIn();

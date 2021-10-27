@@ -14,12 +14,12 @@ public:
     void EvButton(Button* pButton);
     void EvButtonSettings(bool bButtonDown);
 
-    
+
     void EvSDCardIn();
 
 
     // Logic events
-    // ...
+    void EvPatternChanged();
 
 private:
     Components& components;

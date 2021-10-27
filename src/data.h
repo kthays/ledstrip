@@ -4,7 +4,5 @@
 #include "patterns.h"
 
 struct Data {
-    Data();
     CyclicPatternList patternList;
-    const Pattern* GetCurrentPattern() const;
 };

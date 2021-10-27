@@ -4,11 +4,15 @@
 #include <Arduino.h> // Only needed for Serial.Print
 
 // ** Pattern
-Pattern::Pattern(const char* _szcFilePath, int _iTimePerRowMS)
+uint8_t Pattern::arRowData[PATTERN_ROW_DATA_BYTES] = {0};
+
+Pattern::Pattern(const char* _szcFilePath, unsigned long uFileSizeBytes, int _iTimePerRowMS)
 : pNext(nullptr)
+, iRowCount(uFileSizeBytes / PATTERN_ROW_DATA_BYTES)
+, iCurRow(0)
 , iTimePerRowMS(_iTimePerRowMS)
 {
-    strlcpy(szcFilePath, _szcFilePath, PATTERN_STR_LEN);
+    strlcpy(szcFilePath, _szcFilePath, PATTERN_FILE_STR_LEN);
 }
 
 const char* Pattern::GetFilePath() const
@@ -16,9 +20,41 @@ const char* Pattern::GetFilePath() const
     return szcFilePath;
 }
 
+int Pattern::GetCurrentRow() const
+{
+    return iCurRow;
+}
+
 int Pattern::GetTimePerRowMS() const
 {
     return iTimePerRowMS;
+}
+
+uint8_t* Pattern::GetRowData()
+{
+    return arRowData;
+}
+
+int Pattern::GetRowDataSizeBytes() const
+{
+    return PATTERN_ROW_DATA_BYTES;
+}
+
+
+void Pattern::PrintPatternData(int iPixelsToDisplay) const
+{
+    for (int i = 0; i < iPixelsToDisplay; i++) PrintPixelData(i);
+}
+
+
+void Pattern::PrintPixelData(int iPixelNumber) const
+{
+    const int iCurIndex = iPixelNumber * 3;
+    Serial.print("[");
+    Serial.print(arRowData[iCurIndex + 0]); Serial.print(", ");
+    Serial.print(arRowData[iCurIndex + 1]); Serial.print(", ");
+    Serial.print(arRowData[iCurIndex + 2]); 
+    Serial.println("]");
 }
 
 
@@ -53,7 +89,7 @@ void CyclicPatternList::AddPattern(Pattern* pPattern)
     pLast = pPattern;
 }
 
-const Pattern* CyclicPatternList::GetCurrentPattern() const
+Pattern* CyclicPatternList::GetCurrentPattern()
 {
     return pCurrent;
 }
