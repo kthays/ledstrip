@@ -16,5 +16,6 @@ void setup() {
 
 // The loop function runs over and over again forever
 void loop() {
+  data.Loop();
   components.Loop();
 }

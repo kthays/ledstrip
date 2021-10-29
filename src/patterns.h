@@ -4,11 +4,12 @@
 #define PATTERN_FILE_STR_LEN    16          // 8.3 files
 #define PATTERN_ROW_DATA_BYTES  (120 * 3)     // 120 pixels per row * 3 bytes per pixel (RGB)
 
-
 // ** Pattern - Metadata for a pattern, includes the file path on the SD card to the pattern data, and how fast it should go
 class Pattern {
 public:
     Pattern(const char* szcFilePath,  unsigned long uFileSizeBytes, int iTimePerRowMS);
+
+    void Loop();
 
     const char* GetFilePath() const;
     
@@ -27,7 +28,10 @@ private:
     friend class CyclicPatternList; // Give the list container access to the pNext var
     Pattern* pNext;
 
+    // Shared data across all pattern objects
     static uint8_t arRowData[PATTERN_ROW_DATA_BYTES];
+    static unsigned long uTimeAtLastRowUpdate;
+
     int iRowCount;  // Determined by file size
     int iCurRow;
     int iTimePerRowMS;
@@ -41,6 +45,8 @@ class CyclicPatternList {
 public:
     CyclicPatternList();
     ~CyclicPatternList();
+
+    void Loop();
 
     // Takes ownership of the given pattern and appends it to the end of the list
     void AddPattern(Pattern* pPattern);

@@ -4,5 +4,7 @@
 #include "patterns.h"
 
 struct Data {
+    void Loop(); // Calls Loop() for all data
+
     CyclicPatternList patternList;
 };

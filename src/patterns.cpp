@@ -1,10 +1,10 @@
 #include "patterns.h"
 #include "string.h"
-
 #include <Arduino.h> // Only needed for Serial.Print
 
 // ** Pattern
 uint8_t Pattern::arRowData[PATTERN_ROW_DATA_BYTES] = {0};
+unsigned long Pattern::uTimeAtLastRowUpdate = 0;
 
 Pattern::Pattern(const char* _szcFilePath, unsigned long uFileSizeBytes, int _iTimePerRowMS)
 : pNext(nullptr)
@@ -13,6 +13,20 @@ Pattern::Pattern(const char* _szcFilePath, unsigned long uFileSizeBytes, int _iT
 , iTimePerRowMS(_iTimePerRowMS)
 {
     strlcpy(szcFilePath, _szcFilePath, PATTERN_FILE_STR_LEN);
+}
+
+void Pattern::Loop()
+{
+    // Update the current row, based on how long it's been since the last update
+    const unsigned long uCurTime = millis();
+    const unsigned long uTimeElapsed = uCurTime - uTimeAtLastRowUpdate;
+    const int iNewRow = (iCurRow + (uTimeElapsed / iTimePerRowMS)) % iRowCount;
+
+    if (iNewRow != iCurRow) {
+        iCurRow = iNewRow;
+        uTimeAtLastRowUpdate = uCurTime;
+        Serial.print("Cur Row: "); Serial.println(iCurRow);
+    }
 }
 
 const char* Pattern::GetFilePath() const
@@ -72,6 +86,13 @@ CyclicPatternList::~CyclicPatternList()
     // Destroy the list contents
     Clear();
 }
+
+void CyclicPatternList::Loop()
+{
+    // Only the current pattern needs to loop
+    if (pCurrent != nullptr) pCurrent->Loop();
+}
+
 
 // Takes ownership of the given pattern and appends it to the end of the list
 void CyclicPatternList::AddPattern(Pattern* pPattern)
