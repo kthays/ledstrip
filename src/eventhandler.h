@@ -17,6 +17,7 @@ public:
 
     // Logic events
     void EvPatternChanged();
+    void EvPatternRowChanged();
 
 private:
     EventHandler();

@@ -1,6 +1,7 @@
 #include "patterns.h"
 #include "string.h"
 #include <Arduino.h> // Only needed for Serial.Print
+#include "eventhandler.h"
 
 // ** Pattern
 uint8_t Pattern::arRowData[PATTERN_ROW_DATA_BYTES] = {0};
@@ -25,7 +26,7 @@ void Pattern::Loop()
     if (iNewRow != iCurRow) {
         iCurRow = iNewRow;
         uTimeAtLastRowUpdate = uCurTime;
-        Serial.print("Cur Row: "); Serial.println(iCurRow);
+        EventHandler::GetInstance().EvPatternRowChanged();
     }
 }
 

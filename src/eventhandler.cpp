@@ -49,3 +49,10 @@ void EventHandler::EvPatternChanged()
     components.sdCard.ReadPatternData(pCurPattern);
     pCurPattern->PrintPatternData(5);
 }
+
+void EventHandler::EvPatternRowChanged()
+{
+    Pattern* pCurPattern = data.patternList.GetCurrentPattern();
+    if (pCurPattern == nullptr) return;
+    Serial.print("Row "); Serial.println(pCurPattern->GetCurrentRow());
+}
