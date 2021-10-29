@@ -1,16 +1,22 @@
 #include "components.h"
 #include "pins.h"
 
+Components& Components::GetInstance()
+{
+    static Components instance;
+    return instance;
+}
+
 Components::Components()
 : buttonSettings(PIN_BUTTON_SETTINGS)
 {
 
 }
 
-void Components::Setup(EventHandler* pEventHandler)
+void Components::Setup()
 {
-    sdCard.Setup(pEventHandler);
-    buttonSettings.Setup(pEventHandler);
+    sdCard.Setup();
+    buttonSettings.Setup();
 }
 
 void Components::Loop()

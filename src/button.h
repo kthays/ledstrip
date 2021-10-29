@@ -7,13 +7,12 @@ class Button {
 public:
   explicit Button(int iPinNum);
   
-  virtual void Setup(EventHandler* pHandler = nullptr);
+  virtual void Setup();
   virtual void Loop();
 
   bool IsDown();
 
 private:
-  EventHandler* pEventHandler;
   const int iPinNum;
   
   int iStateCurrent;

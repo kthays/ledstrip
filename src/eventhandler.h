@@ -8,20 +8,18 @@
 class Button;
 class EventHandler {
 public:
-    EventHandler(Components& components, Data& data);
+    static EventHandler& GetInstance();
 
     // Component level events
     void EvButton(Button* pButton);
     void EvButtonSettings(bool bButtonDown);
-
-
     void EvSDCardIn();
-
 
     // Logic events
     void EvPatternChanged();
 
 private:
+    EventHandler();
     Components& components;
     Data& data;
 };

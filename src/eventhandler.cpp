@@ -1,8 +1,14 @@
 #include "eventhandler.h"
 
-EventHandler::EventHandler(Components& _components, Data& _data)
-: components(_components)
-, data(_data)
+EventHandler& EventHandler::GetInstance()
+{
+    static EventHandler instance;
+    return instance;
+}
+
+EventHandler::EventHandler()
+: components(Components::GetInstance())
+, data(Data::GetInstance())
 {
 
 }

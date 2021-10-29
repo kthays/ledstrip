@@ -16,7 +16,6 @@
 // Note: using .js instead of .json since the sd module can only handle 8.3 filenames
 #define SDCARD_FILE_PATTERNS  "patterns.js"
 
-class EventHandler;
 class CyclicPatternList;
 class Pattern;
 
@@ -24,7 +23,7 @@ class SDCard {
 public:
     SDCard();
 
-    void Setup(EventHandler* pEventHandler = nullptr);
+    void Setup();
     void Loop();
 
     // Populates |list| with the patterns described in |SDCARD_FILE_PATTERNS|
@@ -39,7 +38,5 @@ public:
 
 private:
     void EvCardIn(); // Call this every time the SD card is plugged in
-
-    EventHandler* pEventHandler;
     bool bIsCardIn;
 };

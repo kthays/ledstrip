@@ -5,8 +5,7 @@
 
 
 Button::Button(int _iPinNum)
-: pEventHandler(nullptr)
-, iPinNum(_iPinNum)
+: iPinNum(_iPinNum)
 , iStateCurrent(LOW)
 , iStateSteady(LOW)
 , iStateFlicker(LOW)
@@ -15,10 +14,9 @@ Button::Button(int _iPinNum)
  
 }
 
-void Button::Setup(EventHandler* _pEventHandler) 
+void Button::Setup() 
 {
   pinMode(iPinNum, INPUT_PULLUP);
-  pEventHandler = _pEventHandler;
 }
 
 void Button::Loop() 
@@ -38,7 +36,7 @@ void Button::Loop()
     // Did the state actually change?
     if (iStateSteady != iStateCurrent) {
       iStateSteady = iStateCurrent; // Set the steady state now, so the event handler can call IsDown
-      if (pEventHandler != nullptr) pEventHandler->EvButton(this);
+      EventHandler::GetInstance().EvButton(this);
     }
     
     iStateSteady = iStateCurrent;
