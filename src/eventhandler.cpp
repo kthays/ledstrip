@@ -53,12 +53,11 @@ void EventHandler::EvPatternChanged()
 
     // Load the pattern data from the SD card into our values array
     components.sdCard.ReadPatternData(pCurPattern);
-    //pCurPattern->PrintPatternData(5);
 }
 
 void EventHandler::EvPatternRowChanged()
 {
     Pattern* pCurPattern = data.patternList.GetCurrentPattern();
     if (pCurPattern == nullptr) return;
-    //Serial.print("Row "); Serial.println(pCurPattern->GetCurrentRow());
+    components.sdCard.ReadPatternData(pCurPattern);
 }
