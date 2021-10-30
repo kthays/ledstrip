@@ -36,6 +36,14 @@ void EventHandler::EvDimmer(int iValue)
     data.iDimmerPercent = iValue;
 }
 
+void EventHandler::EvLightSensor(bool bIsDay)
+{
+    if (bIsDay) Serial.println("Day time");
+    else Serial.println("Night time");
+
+    data.bIsDay = bIsDay;
+}
+
 void EventHandler::EvSDCardIn()
 {
     Serial.println("Reloading pattern list");

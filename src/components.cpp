@@ -15,6 +15,8 @@ Components::Components()
 
 void Components::Setup()
 {
+    dimmer.Setup();
+    lightSensor.Setup();
     sdCard.Setup();
     buttonSettings.Setup();
 }
@@ -23,5 +25,6 @@ void Components::Loop()
 {
     buttonSettings.Loop();
     dimmer.Loop();
+    lightSensor.Loop();
     sdCard.Loop();
 }

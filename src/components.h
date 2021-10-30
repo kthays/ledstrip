@@ -3,6 +3,7 @@
 #pragma once
 #include "button.h"
 #include "dimmer.h"
+#include "lightsensor.h"
 #include "sdcard.h"
 
 struct Components {
@@ -17,6 +18,7 @@ struct Components {
     void Loop();
 
     Dimmer dimmer;  // Pin A0
+    LightSensor lightSensor; // Pin A4
     Button buttonSettings; // Pin 7
     SDCard sdCard; // Pins 8, 10, 11, 12, 13
     

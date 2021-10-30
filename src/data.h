@@ -8,6 +8,7 @@ struct Data {
 
     void Loop(); // Calls Loop() for all data
 
+    bool bIsDay;
     CyclicPatternList patternList;
     int iDimmerPercent; // 0 = off, 100 = full brightness
 

@@ -14,6 +14,7 @@ public:
     void EvButton(Button* pButton);
     void EvButtonSettings(bool bButtonDown);
     void EvDimmer(int iValue);
+    void EvLightSensor(bool bIsDay);
     void EvSDCardIn();
 
     // Logic events

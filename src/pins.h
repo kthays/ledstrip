@@ -3,6 +3,7 @@
 
 
 #define PIN_DIMMER              PIN_A0
+#define PIN_LIGHTSENSOR         PIN_A4
 #define PIN_BUTTON_SETTINGS     7
 
 #define PIN_SDCARD_CD           8
