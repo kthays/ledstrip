@@ -30,6 +30,12 @@ void EventHandler::EvButtonSettings(bool bButtonDown)
     
 }
 
+void EventHandler::EvDimmer(int iValue)
+{
+    Serial.print("Dimmer: "); Serial.println(iValue);
+    data.iDimmerPercent = iValue;
+}
+
 void EventHandler::EvSDCardIn()
 {
     Serial.println("Reloading pattern list");
@@ -47,12 +53,12 @@ void EventHandler::EvPatternChanged()
 
     // Load the pattern data from the SD card into our values array
     components.sdCard.ReadPatternData(pCurPattern);
-    pCurPattern->PrintPatternData(5);
+    //pCurPattern->PrintPatternData(5);
 }
 
 void EventHandler::EvPatternRowChanged()
 {
     Pattern* pCurPattern = data.patternList.GetCurrentPattern();
     if (pCurPattern == nullptr) return;
-    Serial.print("Row "); Serial.println(pCurPattern->GetCurrentRow());
+    //Serial.print("Row "); Serial.println(pCurPattern->GetCurrentRow());
 }

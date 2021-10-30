@@ -9,6 +9,7 @@ struct Data {
     void Loop(); // Calls Loop() for all data
 
     CyclicPatternList patternList;
+    int iDimmerPercent; // 0 = off, 100 = full brightness
 
 private:
     Data();

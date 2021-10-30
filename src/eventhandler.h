@@ -13,6 +13,7 @@ public:
     // Component level events
     void EvButton(Button* pButton);
     void EvButtonSettings(bool bButtonDown);
+    void EvDimmer(int iValue);
     void EvSDCardIn();
 
     // Logic events

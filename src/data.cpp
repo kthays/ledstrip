@@ -1,6 +1,7 @@
 #include "data.h"
 
 Data::Data() 
+: iDimmerPercent(0)
 {
 
 }

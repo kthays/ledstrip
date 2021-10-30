@@ -22,5 +22,6 @@ void Components::Setup()
 void Components::Loop()
 {
     buttonSettings.Loop();
+    dimmer.Loop();
     sdCard.Loop();
 }
