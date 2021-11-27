@@ -38,11 +38,13 @@ void EventHandler::EvButtonSettings(bool bButtonDown)
 
 void EventHandler::EvButtonPower(bool bButtonDown)
 {
+    // When the power button is pressed, toggle the LED strip's "on" state,
+    // and initiate the button light transition
     if (bButtonDown) {
-        Serial.println("Power button");
-        components.buttonPower.SetBrightness(100);
-    } else {
-        components.buttonPower.SetBrightness(0);
+        data.bIsStripOn = !data.bIsStripOn;
+        if (data.bIsStripOn) Serial.println("Lights On");
+        else Serial.println("Lights Off");
+        components.buttonPower.LightEase(data.bIsStripOn);
     }
 }
 

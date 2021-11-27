@@ -8,6 +8,8 @@ struct Data {
 
     void Loop(); // Calls Loop() for all data
 
+    bool bIsStripOn; // TODO: we might end up replacing this with a member variable in the LED strip class
+
     bool bIsDay;
     CyclicPatternList patternList;
     int iDimmerPercent; // 0 = off, 100 = full brightness

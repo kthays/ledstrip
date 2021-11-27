@@ -54,6 +54,10 @@ bool Button::IsDown()
 // ** ButtonLED **
 ButtonLED::ButtonLED(int iPinNO)
 : Button(iPinNO)
+, iLightCurrent(0)
+, iLightStart(0)
+, iLightEnd(0)
+, uEaseTimeStart(0)
 {
 
 }
@@ -64,16 +68,37 @@ void ButtonLED::Setup()
   pinMode(PIN_BUTTON_POWER_5V, OUTPUT);
 }
 
+// Ease between start and end, t between 0 and 1
+int EaseFunction(float t, int iStart, int iEnd) {
+  t = constrain(t, 0.0, 1.0);
+  t = t < 0.5 ? 8 * t * t * t * t : 1 - pow(-2 * t + 2, 4) / 2; // https://easings.net/#easeInOutQuart
+  return (iStart * (1.0f - t)) + (iEnd * t);
+}
+
 void ButtonLED::Loop()
 {
   Button::Loop();
+
+  // Check if we should ease the LED brightness value
+  if (iLightCurrent != iLightEnd) {
+    float t = float(millis() - uEaseTimeStart) / float(BUTTON_LIGHT_EASE_TIME_MS);
+    SetBrightness(EaseFunction(t, iLightStart, iLightEnd));
+  }
 }
 
 void ButtonLED::SetBrightness(int iPercent)
 {
-  const int iLightCurrent = constrain(iPercent, 0, 100);
+  iLightCurrent = constrain(iPercent, 0, 100);
   
   // Max output for analogWrite is 255
   analogWrite(PIN_BUTTON_POWER_5V, map(iLightCurrent, 0, 100, 0, 255));
 }
 
+void ButtonLED::LightEase(bool bEaseOn)
+{
+  uEaseTimeStart = millis();
+  iLightStart = bEaseOn ? BUTTON_LIGHT_MIN : BUTTON_LIGHT_MAX;
+  iLightEnd = bEaseOn ? BUTTON_LIGHT_MAX : BUTTON_LIGHT_MIN;
+
+  // Loop will take care of the rest
+}

@@ -1,7 +1,8 @@
 // https://arduinogetstarted.com/tutorials/arduino-button-debounce
 #pragma once
-
-class EventHandler;
+#define BUTTON_LIGHT_EASE_TIME_MS   750
+#define BUTTON_LIGHT_MIN            0
+#define BUTTON_LIGHT_MAX            100
 
 class Button {
 public:
@@ -28,8 +29,15 @@ public:
   virtual void Setup() override;
   virtual void Loop() override;
 
+  void LightEase(bool bEaseOn); // Ease the light on or off
   void SetBrightness(int iPercent);
 
 private:
-  
+  // Brightness values are on a 0-100 scale
+  int iLightCurrent;
+  int iLightStart;
+  int iLightEnd;
+
+  unsigned long uEaseTimeStart;
+
 };

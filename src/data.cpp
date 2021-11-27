@@ -3,6 +3,7 @@
 Data::Data() 
 : iDimmerPercent(0)
 , bIsDay(false)
+, bIsStripOn(false)
 {
 
 }
