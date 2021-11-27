@@ -17,8 +17,12 @@ EventHandler::EventHandler()
 
  void EventHandler::EvButton(Button* pButton)
  {
+ 
     if (pButton == &components.buttonSettings) EvButtonSettings(pButton->IsDown());
     if (pButton == &components.buttonPower) EvButtonPower(pButton->IsDown());
+
+    // Calibrate when pressing both buttons
+    if (components.buttonPower.IsDown() && components.buttonSettings.IsDown()) EvCalibrate();
  }
 
 void EventHandler::EvButtonSettings(bool bButtonDown)
@@ -80,4 +84,9 @@ void EventHandler::EvPatternRowChanged()
     Pattern* pCurPattern = data.patternList.GetCurrentPattern();
     if (pCurPattern == nullptr) return;
     components.sdCard.ReadPatternData(pCurPattern);
+}
+
+void EventHandler::EvCalibrate()
+{
+    components.lightSensor.Calibrate();
 }
