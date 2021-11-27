@@ -1,5 +1,6 @@
 #include "button.h"
 #include "eventhandler.h"
+#include "pins.h"
 
 #define BUTTON_DEBOUNCE_DELAY_MS    50
 
@@ -47,3 +48,32 @@ bool Button::IsDown()
 {
   return (iStateSteady == LOW);
 }
+
+
+
+// ** ButtonLED **
+ButtonLED::ButtonLED(int iPinNO)
+: Button(iPinNO)
+{
+
+}
+
+void ButtonLED::Setup()
+{
+  Button::Setup();
+  pinMode(PIN_BUTTON_POWER_5V, OUTPUT);
+}
+
+void ButtonLED::Loop()
+{
+  Button::Loop();
+}
+
+void ButtonLED::SetBrightness(int iPercent)
+{
+  const int iLightCurrent = constrain(iPercent, 0, 100);
+  
+  // Max output for analogWrite is 255
+  analogWrite(PIN_BUTTON_POWER_5V, map(iLightCurrent, 0, 100, 0, 255));
+}
+

@@ -18,8 +18,9 @@ struct Components {
     void Loop();
 
     Dimmer dimmer;  // Pin A0
-    LightSensor lightSensor; // Pin A4
+    LightSensor lightSensor; // Pin A1
     Button buttonSettings; // Pin 7
+    ButtonLED buttonPower; // Pins 3, 4
     SDCard sdCard; // Pins 8, 10, 11, 12, 13
     
 private:

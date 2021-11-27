@@ -18,6 +18,7 @@ EventHandler::EventHandler()
  void EventHandler::EvButton(Button* pButton)
  {
     if (pButton == &components.buttonSettings) EvButtonSettings(pButton->IsDown());
+    if (pButton == &components.buttonPower) EvButtonPower(pButton->IsDown());
  }
 
 void EventHandler::EvButtonSettings(bool bButtonDown)
@@ -26,8 +27,19 @@ void EventHandler::EvButtonSettings(bool bButtonDown)
     if (bButtonDown) {
         data.patternList.Advance();
         EvPatternChanged();
+        Serial.println("Settings button");
     }
     
+}
+
+void EventHandler::EvButtonPower(bool bButtonDown)
+{
+    if (bButtonDown) {
+        Serial.println("Power button");
+        components.buttonPower.SetBrightness(100);
+    } else {
+        components.buttonPower.SetBrightness(0);
+    }
 }
 
 void EventHandler::EvDimmer(int iValue)

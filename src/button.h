@@ -20,3 +20,16 @@ private:
   int iStateFlicker;
   unsigned long uStateChangeTimeMS; // Time at which the state changed
 };
+
+class ButtonLED:public Button {
+public:
+  explicit ButtonLED(int iPinNO);
+
+  virtual void Setup() override;
+  virtual void Loop() override;
+
+  void SetBrightness(int iPercent);
+
+private:
+  
+};
