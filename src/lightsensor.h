@@ -9,8 +9,12 @@ public:
   void Setup();
   void Loop();
   
-  // Uses the current sensor reading as the day-night threshold value
-  void Calibrate();
+  // Calibration defines the day-night threshold value
+  void SetCalibration(int iThreshold);
+  int GetCalibration() const;
+
+  // Returns the current light sensor reading
+  int GetValue() const;
 
 private:
   int iValue;

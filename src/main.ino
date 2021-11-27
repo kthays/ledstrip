@@ -10,6 +10,7 @@ void setup() {
   Serial.begin(9600);
 
   // Setup our components
+  data.Setup();
   components.Setup();
 }
 

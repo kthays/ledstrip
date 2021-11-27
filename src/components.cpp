@@ -1,4 +1,5 @@
 #include "components.h"
+#include "data.h"
 #include "pins.h"
 
 Components& Components::GetInstance()
@@ -21,6 +22,9 @@ void Components::Setup()
     sdCard.Setup();
     buttonSettings.Setup();
     buttonPower.Setup();
+
+    const Data& data = Data::GetInstance();
+    lightSensor.SetCalibration(data.storage.iLightSensorCalibration);
 }
 
 void Components::Loop()

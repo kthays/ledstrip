@@ -90,5 +90,7 @@ void EventHandler::EvPatternRowChanged()
 
 void EventHandler::EvCalibrate()
 {
-    components.lightSensor.Calibrate();
+    components.lightSensor.SetCalibration(components.lightSensor.GetValue());
+    data.storage.iLightSensorCalibration = components.lightSensor.GetCalibration();
+    data.storage.Write();
 }

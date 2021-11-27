@@ -17,7 +17,6 @@ LightSensor::LightSensor()
 void LightSensor::Setup()
 {
   iValue = analogRead(PIN_LIGHTSENSOR);
-  Calibrate();
 }
 
 void LightSensor::Loop()
@@ -37,9 +36,19 @@ void LightSensor::Loop()
   }
 }
 
-void LightSensor::Calibrate()
+void LightSensor::SetCalibration(int _iThreshold)
 {
-  iThreshold = analogRead(PIN_LIGHTSENSOR);
+  iThreshold = _iThreshold;
   Serial.print("Light Calibration: ");
   Serial.println(iThreshold);
+}
+
+int LightSensor::GetCalibration() const
+{
+  return iThreshold;
+}
+
+int LightSensor::GetValue() const
+{
+  return analogRead(PIN_LIGHTSENSOR); 
 }
